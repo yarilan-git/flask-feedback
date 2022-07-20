@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div id="content_area">
+    <h1> {{msg}}</h1>
+    <form action="/logout" method="POST">
+        <div>
+            <span class="label">Username: </span>
+            <span>{{ user.username}}</span>
+        </div>
+
+        <div>  
+            <span class="label">email:</span>
+            <span>{{ user.email}}</span>
+        </div>
+        
+        <div>
+            <span class="label">First name:</span>
+            <span>{{ user.first_name}}</span>
+        </div>
+
+        <div>
+            <span class="label">Last name:</span>
+            <span>{{ user.last_name}}</span>
+        </div>
+
+
+
+        <div class="form_line">
+            {% set formact='/users/' + user.username + '/feedback/add' %}
+            {% set delete_user_action= '/users/' + user.username + '/delete' %}
+            <button  class="inline" type="submit">Log out</button>
+            <button  class="inline" type="submit" formaction={{formact}}>Add feedback</button>
+            <button  class="inline" type="submit" formaction={{delete_user_action}}>Delete user</button>
+        </div>
+    </form>
+    {% if user.feedbacks %}
+        <h2>Feedbacks</h2>
+        <ul>
+            {% for feedback in user.feedbacks %}
+                {% set feedback_delete_action = '/feedbacks/' + feedback.id|string + '/delete' %}
+                {% set feedback_update_action = '/feedbacks/' + feedback.id|string + '/update' %} 
+
+                <li>{{feedback.title}} - {{feedback.content}} 
+                    <form class="inline" action={{feedback_delete_action}} method="POST">
+                        <button class="inline feedback_action_btn" type="submit"><i class="fa-solid fa-delete-left"></i></button>
+                    </form>
+                    <form class="inline" action={{feedback_update_action}} method="POST">
+                        <button class="inline feedback_action_btn" type="submit"><i class="fa-solid fa-pencil"></i></button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+    
+{% endblock%}
+

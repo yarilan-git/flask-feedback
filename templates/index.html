@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    <div id="content_area">
+        <form method="POST">
+            <h1>We welcome your feedback !</h1>
+            <div class="form_line">
+                <button  class="inline" type="submit" formaction="/register">Register</button>
+                <button  formaction="/login" formmethod = "GET" class="inline" type="submit">Log in</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
